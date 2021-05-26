@@ -20,23 +20,28 @@ def openGoatDoor(choiceDoor: int, doors: List[int]):
     """
     Choose the door to open that's not the choice
     """
-    door = -1
+    goat = -1
     for x in range(len(doors)):
         if doors[x] == False and x != choiceDoor:
             door = x
-    return door
+    return door, (0+1+2)-(goat+choiceDoor)
 
 def simulate():
     """
     Simulate one thing
     """
-    print("Getting random door")
     doors = getRandomDoorArray()
     pickedDoor = chooseDoor()
+    goatDoor, switchDoor = openGoatDoor(pickedDoor, doors)
+    return doors[goatDoor], doors[switchDoor]
 
 
 def main():
-    print("Start of Simulation")
+    sumFirstChoice = 0
+    sumSwitchChoice = 0
+    #simulate
+    choiceDoorBool, switchDoorBool = simulate()
+
 
 
 if __name__ == "__main__":
