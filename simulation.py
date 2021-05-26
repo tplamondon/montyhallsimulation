@@ -23,8 +23,8 @@ def openGoatDoor(choiceDoor: int, doors: List[int]):
     goat = -1
     for x in range(len(doors)):
         if doors[x] == False and x != choiceDoor:
-            door = x
-    return door, (0+1+2)-(goat+choiceDoor)
+            goat = x
+    return goat, (0+1+2)-(goat+choiceDoor)
 
 def simulate():
     """
@@ -33,15 +33,25 @@ def simulate():
     doors = getRandomDoorArray()
     pickedDoor = chooseDoor()
     goatDoor, switchDoor = openGoatDoor(pickedDoor, doors)
-    return doors[goatDoor], doors[switchDoor]
+    return doors[pickedDoor], doors[switchDoor]
 
 
 def main():
+    TIMESTOSIMULATE = 100000
     sumFirstChoice = 0
     sumSwitchChoice = 0
-    #simulate
-    choiceDoorBool, switchDoorBool = simulate()
+    #simulate x times
+    for x in range(TIMESTOSIMULATE):
+        choiceDoorBool, switchDoorBool = simulate()
+        if choiceDoorBool == True:
+            sumFirstChoice += 1
+        if switchDoorBool == True:
+            sumSwitchChoice += 1
+    percentSwitchWon = float(sumSwitchChoice) / float(TIMESTOSIMULATE)
+    percentChoiceWon = float(sumFirstChoice) / float(TIMESTOSIMULATE)
 
+    print(f"Keeping your first choice, you win {round(percentChoiceWon, 5)*100}% of the time")
+    print(f"Switching your choice, you win {round(percentSwitchWon, 5)*100}% of the time")
 
 
 if __name__ == "__main__":
